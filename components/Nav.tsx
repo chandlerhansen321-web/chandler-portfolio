@@ -27,12 +27,12 @@ export default function Nav() {
         left: 0,
         right: 0,
         zIndex: 100,
-        borderBottom: scrolled ? "1px solid #333" : "1px solid transparent",
-        background: scrolled ? "rgba(10,10,10,0.96)" : "transparent",
-        backdropFilter: scrolled ? "blur(8px)" : "none",
-        transition: "all 0.2s",
-        padding: "0 2rem",
-        height: "56px",
+        borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent",
+        background: scrolled ? "rgba(9,9,9,0.92)" : "transparent",
+        backdropFilter: scrolled ? "blur(12px)" : "none",
+        transition: "all 0.4s ease",
+        padding: "0 2.5rem",
+        height: "64px",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
@@ -41,31 +41,33 @@ export default function Nav() {
       <a
         href="#top"
         style={{
-          fontSize: "1.1rem",
-          fontWeight: 700,
-          letterSpacing: "0.1em",
-          color: "#ff3c00",
+          fontSize: "0.85rem",
+          fontWeight: 600,
+          letterSpacing: "0.2em",
+          color: "var(--accent)",
           textTransform: "uppercase",
+          fontFamily: "var(--font-body)",
         }}
       >
-        CH
+        Chandler Hansen
       </a>
 
       {/* Desktop links */}
-      <div style={{ display: "flex", gap: "2rem" }} className="hidden-mobile">
+      <div style={{ display: "flex", gap: "2.5rem" }} className="hidden-mobile">
         {links.map((l) => (
           <a
             key={l.href}
             href={l.href}
             style={{
-              fontSize: "0.75rem",
+              fontSize: "0.7rem",
               letterSpacing: "0.15em",
               textTransform: "uppercase",
-              color: "#f0ede6",
-              transition: "color 0.15s",
+              color: "var(--text-secondary)",
+              transition: "color 0.3s ease",
+              fontWeight: 400,
             }}
-            onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "#ff3c00")}
-            onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "#f0ede6")}
+            onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "var(--fg)")}
+            onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "var(--text-secondary)")}
           >
             {l.label}
           </a>
@@ -77,17 +79,21 @@ export default function Nav() {
         onClick={() => setMenuOpen(!menuOpen)}
         style={{
           background: "none",
-          border: "1px solid #333",
-          color: "#f0ede6",
-          padding: "6px 10px",
-          cursor: "crosshair",
-          fontSize: "0.75rem",
-          letterSpacing: "0.1em",
+          border: "1px solid var(--border)",
+          color: "var(--fg)",
+          padding: "8px 14px",
+          cursor: "pointer",
+          fontSize: "0.7rem",
+          letterSpacing: "0.15em",
+          textTransform: "uppercase",
+          fontFamily: "var(--font-body)",
+          fontWeight: 400,
           display: "none",
+          borderRadius: "2px",
         }}
         className="show-mobile"
       >
-        {menuOpen ? "CLOSE" : "MENU"}
+        {menuOpen ? "Close" : "Menu"}
       </button>
 
       {/* Mobile dropdown */}
@@ -95,15 +101,16 @@ export default function Nav() {
         <div
           style={{
             position: "fixed",
-            top: "56px",
+            top: "64px",
             left: 0,
             right: 0,
-            background: "#0a0a0a",
-            borderBottom: "1px solid #333",
-            padding: "1.5rem 2rem",
+            background: "rgba(9,9,9,0.98)",
+            backdropFilter: "blur(12px)",
+            borderBottom: "1px solid var(--border)",
+            padding: "2rem 2.5rem",
             display: "flex",
             flexDirection: "column",
-            gap: "1.5rem",
+            gap: "1.75rem",
           }}
         >
           {links.map((l) => (
@@ -112,9 +119,11 @@ export default function Nav() {
               href={l.href}
               onClick={() => setMenuOpen(false)}
               style={{
-                fontSize: "1rem",
+                fontSize: "0.9rem",
                 letterSpacing: "0.15em",
                 textTransform: "uppercase",
+                color: "var(--text-secondary)",
+                fontWeight: 400,
               }}
             >
               {l.label}

@@ -1,60 +1,94 @@
 "use client";
 import { projects } from "@/data/projects";
 import { ExternalLink, Github } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function Projects() {
   return (
     <section
       id="projects"
       style={{
-        padding: "6rem 2rem",
+        padding: "8rem 2rem",
         maxWidth: "1200px",
         margin: "0 auto",
       }}
     >
-      <div style={{ marginBottom: "4rem", borderLeft: "3px solid #ff3c00", paddingLeft: "1.5rem" }}>
-        <p style={{ fontSize: "0.65rem", letterSpacing: "0.4em", color: "#ff3c00", marginBottom: "0.5rem" }}>
-          02 / PROJECTS
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        style={{
+          marginBottom: "4rem",
+          borderLeft: "2px solid var(--accent)",
+          paddingLeft: "1.5rem",
+        }}
+      >
+        <p
+          style={{
+            fontSize: "0.7rem",
+            letterSpacing: "0.3em",
+            color: "var(--accent)",
+            marginBottom: "0.75rem",
+            textTransform: "uppercase",
+            fontWeight: 400,
+          }}
+        >
+          02 / Projects
         </p>
-        <h2 style={{ fontSize: "clamp(2rem, 5vw, 4rem)", lineHeight: 1, margin: 0 }}>
+        <h2
+          style={{
+            fontSize: "clamp(2rem, 5vw, 3.5rem)",
+            lineHeight: 1,
+            margin: 0,
+          }}
+        >
           Things I&apos;ve Built
         </h2>
-      </div>
+      </motion.div>
 
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
-          gap: "1px",
-          background: "#333",
-          border: "1px solid #333",
+          gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))",
+          gap: "1.5rem",
         }}
       >
         {projects.map((project, i) => (
-          <div
+          <motion.div
             key={project.id}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: i * 0.1 }}
             style={{
-              background: "#0a0a0a",
-              padding: "2rem",
+              background: "rgba(255,255,255,0.02)",
+              padding: "2.5rem",
               position: "relative",
-              transition: "background 0.15s",
-              cursor: "crosshair",
+              transition: "all 0.3s ease",
+              borderRadius: "4px",
+              border: "1px solid var(--border)",
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.background = "#111";
+              (e.currentTarget as HTMLElement).style.background = "rgba(201, 185, 154, 0.04)";
+              (e.currentTarget as HTMLElement).style.borderColor = "rgba(201, 185, 154, 0.15)";
+              (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.background = "#0a0a0a";
+              (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.02)";
+              (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.06)";
+              (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
             }}
           >
             <div
               style={{
                 position: "absolute",
-                top: "1.5rem",
-                right: "1.5rem",
-                fontSize: "0.6rem",
-                color: "#444",
-                letterSpacing: "0.2em",
+                top: "2rem",
+                right: "2rem",
+                fontSize: "0.65rem",
+                color: "rgba(255,255,255,0.15)",
+                letterSpacing: "0.15em",
+                fontWeight: 300,
               }}
             >
               {String(i + 1).padStart(2, "0")}
@@ -62,8 +96,8 @@ export default function Projects() {
 
             <h3
               style={{
-                fontSize: "1.1rem",
-                marginBottom: "0.75rem",
+                fontSize: "1.25rem",
+                marginBottom: "1rem",
                 marginTop: 0,
               }}
             >
@@ -72,10 +106,10 @@ export default function Projects() {
 
             <p
               style={{
-                fontSize: "0.8rem",
-                color: "#888",
-                lineHeight: 1.6,
-                marginBottom: "1.5rem",
+                fontSize: "0.85rem",
+                color: "var(--text-secondary)",
+                lineHeight: 1.7,
+                marginBottom: "1.75rem",
               }}
             >
               {project.description}
@@ -85,20 +119,21 @@ export default function Projects() {
               style={{
                 display: "flex",
                 flexWrap: "wrap",
-                gap: "0.4rem",
-                marginBottom: "1.5rem",
+                gap: "0.5rem",
+                marginBottom: "2rem",
               }}
             >
               {project.tags.map((tag) => (
                 <span
                   key={tag}
                   style={{
-                    fontSize: "0.6rem",
-                    letterSpacing: "0.15em",
+                    fontSize: "0.65rem",
+                    letterSpacing: "0.1em",
                     textTransform: "uppercase",
-                    border: "1px solid #333",
-                    padding: "2px 8px",
-                    color: "#666",
+                    background: "rgba(201, 185, 154, 0.08)",
+                    padding: "4px 12px",
+                    borderRadius: "20px",
+                    color: "var(--text-secondary)",
                   }}
                 >
                   {tag}
@@ -106,7 +141,7 @@ export default function Projects() {
               ))}
             </div>
 
-            <div style={{ display: "flex", gap: "1rem" }}>
+            <div style={{ display: "flex", gap: "1.25rem" }}>
               {project.url && (
                 <a
                   href={project.url}
@@ -115,15 +150,18 @@ export default function Projects() {
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: "0.4rem",
-                    fontSize: "0.65rem",
-                    letterSpacing: "0.15em",
+                    gap: "0.5rem",
+                    fontSize: "0.7rem",
+                    letterSpacing: "0.1em",
                     textTransform: "uppercase",
-                    color: "#ff3c00",
-                    transition: "opacity 0.15s",
+                    color: "var(--accent)",
+                    transition: "opacity 0.3s ease",
+                    fontWeight: 500,
                   }}
+                  onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.opacity = "0.7")}
+                  onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.opacity = "1")}
                 >
-                  <ExternalLink size={12} /> Live
+                  <ExternalLink size={13} /> Live
                 </a>
               )}
               {project.github && (
@@ -134,21 +172,26 @@ export default function Projects() {
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: "0.4rem",
-                    fontSize: "0.65rem",
-                    letterSpacing: "0.15em",
+                    gap: "0.5rem",
+                    fontSize: "0.7rem",
+                    letterSpacing: "0.1em",
                     textTransform: "uppercase",
-                    color: "#666",
-                    transition: "color 0.15s",
+                    color: "var(--text-secondary)",
+                    transition: "color 0.3s ease",
+                    fontWeight: 400,
                   }}
-                  onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#f0ede6")}
-                  onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "#666")}
+                  onMouseEnter={(e) =>
+                    ((e.currentTarget as HTMLElement).style.color = "var(--fg)")
+                  }
+                  onMouseLeave={(e) =>
+                    ((e.currentTarget as HTMLElement).style.color = "var(--text-secondary)")
+                  }
                 >
-                  <Github size={12} /> Code
+                  <Github size={13} /> Code
                 </a>
               )}
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>

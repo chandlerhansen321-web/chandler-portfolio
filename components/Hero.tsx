@@ -1,48 +1,7 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 
 export default function Hero() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const cols = Math.floor(canvas.width / 20);
-    const drops: number[] = Array(cols).fill(1);
-    const chars = "01CHANDLER//{}[]<>";
-
-    function draw() {
-      if (!ctx || !canvas) return;
-      ctx.fillStyle = "rgba(10,10,10,0.05)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "rgba(255,60,0,0.15)";
-      ctx.font = "14px Courier New";
-      for (let i = 0; i < drops.length; i++) {
-        const char = chars[Math.floor(Math.random() * chars.length)];
-        ctx.fillText(char, i * 20, drops[i] * 20);
-        if (drops[i] * 20 > canvas.height && Math.random() > 0.975) drops[i] = 0;
-        drops[i]++;
-      }
-    }
-
-    const interval = setInterval(draw, 50);
-    const onResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    window.addEventListener("resize", onResize);
-    return () => {
-      clearInterval(interval);
-      window.removeEventListener("resize", onResize);
-    };
-  }, []);
-
   return (
     <section
       id="top"
@@ -53,14 +12,42 @@ export default function Hero() {
         alignItems: "center",
         justifyContent: "center",
         overflow: "hidden",
-        borderBottom: "1px solid #333",
       }}
     >
-      <canvas
-        ref={canvasRef}
-        style={{ position: "absolute", inset: 0, opacity: 0.4 }}
-      />
+      {/* Animated gradient mesh background */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "var(--bg)",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            inset: "-50%",
+            animation: "meshMove 20s ease-in-out infinite",
+            background: `
+              radial-gradient(ellipse at 20% 50%, rgba(201, 185, 154, 0.08) 0%, transparent 50%),
+              radial-gradient(ellipse at 80% 20%, rgba(201, 185, 154, 0.05) 0%, transparent 50%),
+              radial-gradient(ellipse at 50% 80%, rgba(160, 140, 110, 0.06) 0%, transparent 50%)
+            `,
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            inset: "-50%",
+            animation: "meshMove2 25s ease-in-out infinite",
+            background: `
+              radial-gradient(ellipse at 70% 60%, rgba(201, 185, 154, 0.06) 0%, transparent 40%),
+              radial-gradient(ellipse at 30% 30%, rgba(180, 160, 130, 0.04) 0%, transparent 45%)
+            `,
+          }}
+        />
+      </div>
 
+      {/* Content */}
       <div
         style={{
           position: "relative",
@@ -69,67 +56,95 @@ export default function Hero() {
           padding: "0 2rem",
         }}
       >
-        <p
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
           style={{
-            fontSize: "0.7rem",
-            letterSpacing: "0.4em",
-            color: "#ff3c00",
-            marginBottom: "1.5rem",
+            fontSize: "0.75rem",
+            letterSpacing: "0.35em",
+            color: "var(--accent)",
+            marginBottom: "2rem",
             textTransform: "uppercase",
+            fontWeight: 400,
           }}
         >
-          [ Portfolio — 2025 ]
-        </p>
+          Portfolio — 2025
+        </motion.p>
 
-        <h1
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
           style={{
             fontSize: "clamp(3rem, 10vw, 9rem)",
             lineHeight: 0.9,
             fontWeight: 700,
             letterSpacing: "-0.02em",
-            textTransform: "uppercase",
             marginBottom: "2rem",
           }}
         >
           Chandler
           <br />
-          <span style={{ color: "#ff3c00", WebkitTextStroke: "2px #ff3c00", WebkitTextFillColor: "transparent" }}>
+          <span
+            style={{
+              color: "transparent",
+              WebkitTextStroke: "1.5px var(--accent)",
+            }}
+          >
             Hansen
           </span>
-        </h1>
+        </motion.h1>
 
-        <p
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
           style={{
-            fontSize: "0.85rem",
-            letterSpacing: "0.2em",
-            color: "#888",
+            fontSize: "0.9rem",
+            letterSpacing: "0.15em",
+            color: "var(--text-secondary)",
             textTransform: "uppercase",
-            marginBottom: "3rem",
+            marginBottom: "3.5rem",
+            fontWeight: 300,
           }}
         >
           Developer &nbsp;/&nbsp; Builder &nbsp;/&nbsp; Creator
-        </p>
+        </motion.p>
 
-        <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          style={{
+            display: "flex",
+            gap: "1.25rem",
+            justifyContent: "center",
+            flexWrap: "wrap",
+          }}
+        >
           <a
             href="#work"
             style={{
-              border: "1px solid #ff3c00",
-              color: "#ff3c00",
-              padding: "0.75rem 2rem",
+              border: "1px solid var(--accent)",
+              color: "var(--bg)",
+              background: "var(--accent)",
+              padding: "0.875rem 2.5rem",
               fontSize: "0.7rem",
-              letterSpacing: "0.2em",
+              letterSpacing: "0.15em",
               textTransform: "uppercase",
-              transition: "all 0.15s",
+              transition: "all 0.3s ease",
               display: "inline-block",
+              borderRadius: "2px",
+              fontWeight: 500,
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.background = "#ff3c00";
-              (e.currentTarget as HTMLElement).style.color = "#000";
+              (e.currentTarget as HTMLElement).style.background = "transparent";
+              (e.currentTarget as HTMLElement).style.color = "var(--accent)";
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.background = "transparent";
-              (e.currentTarget as HTMLElement).style.color = "#ff3c00";
+              (e.currentTarget as HTMLElement).style.background = "var(--accent)";
+              (e.currentTarget as HTMLElement).style.color = "var(--bg)";
             }}
           >
             View Work
@@ -137,47 +152,81 @@ export default function Hero() {
           <a
             href="#contact"
             style={{
-              border: "1px solid #333",
-              color: "#f0ede6",
-              padding: "0.75rem 2rem",
+              border: "1px solid var(--border)",
+              color: "var(--fg)",
+              padding: "0.875rem 2.5rem",
               fontSize: "0.7rem",
-              letterSpacing: "0.2em",
+              letterSpacing: "0.15em",
               textTransform: "uppercase",
-              transition: "all 0.15s",
+              transition: "all 0.3s ease",
               display: "inline-block",
+              borderRadius: "2px",
+              fontWeight: 500,
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.borderColor = "#f0ede6";
+              (e.currentTarget as HTMLElement).style.borderColor = "var(--accent)";
+              (e.currentTarget as HTMLElement).style.color = "var(--accent)";
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.borderColor = "#333";
+              (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.06)";
+              (e.currentTarget as HTMLElement).style.color = "var(--fg)";
             }}
           >
             Get In Touch
           </a>
-        </div>
+        </motion.div>
       </div>
 
-      <div
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 1.2 }}
         style={{
           position: "absolute",
-          bottom: "2rem",
+          bottom: "2.5rem",
           left: "50%",
           transform: "translateX(-50%)",
-          fontSize: "0.65rem",
-          letterSpacing: "0.3em",
-          color: "#444",
-          textTransform: "uppercase",
-          animation: "pulse 2s ease-in-out infinite",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "0.5rem",
         }}
       >
-        Scroll ↓
-      </div>
+        <span
+          style={{
+            fontSize: "0.6rem",
+            letterSpacing: "0.3em",
+            color: "rgba(201, 185, 154, 0.4)",
+            textTransform: "uppercase",
+            fontWeight: 400,
+          }}
+        >
+          Scroll
+        </span>
+        <div
+          style={{
+            width: "1px",
+            height: "32px",
+            background: "linear-gradient(to bottom, rgba(201, 185, 154, 0.4), transparent)",
+            animation: "scrollLine 2s ease-in-out infinite",
+          }}
+        />
+      </motion.div>
 
       <style>{`
-        @keyframes pulse {
-          0%, 100% { opacity: 0.4; }
-          50% { opacity: 1; }
+        @keyframes meshMove {
+          0%, 100% { transform: translate(0, 0) rotate(0deg); }
+          33% { transform: translate(5%, -3%) rotate(1deg); }
+          66% { transform: translate(-3%, 5%) rotate(-1deg); }
+        }
+        @keyframes meshMove2 {
+          0%, 100% { transform: translate(0, 0) rotate(0deg); }
+          50% { transform: translate(-5%, 3%) rotate(-0.5deg); }
+        }
+        @keyframes scrollLine {
+          0%, 100% { opacity: 0.4; transform: scaleY(1); }
+          50% { opacity: 1; transform: scaleY(1.2); }
         }
       `}</style>
     </section>

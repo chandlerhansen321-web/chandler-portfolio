@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef } from "react";
 import { X, ZoomIn } from "lucide-react";
+import { motion } from "framer-motion";
 
 type Photo = {
   src: string;
@@ -36,17 +37,42 @@ export default function Photos() {
   return (
     <section
       id="photos"
-      style={{ padding: "6rem 2rem", borderTop: "1px solid #333" }}
+      style={{ padding: "8rem 2rem" }}
     >
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-        <div style={{ marginBottom: "4rem", borderLeft: "3px solid #ff3c00", paddingLeft: "1.5rem" }}>
-          <p style={{ fontSize: "0.65rem", letterSpacing: "0.4em", color: "#ff3c00", marginBottom: "0.5rem" }}>
-            04 / PHOTOS
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          style={{
+            marginBottom: "4rem",
+            borderLeft: "2px solid var(--accent)",
+            paddingLeft: "1.5rem",
+          }}
+        >
+          <p
+            style={{
+              fontSize: "0.7rem",
+              letterSpacing: "0.3em",
+              color: "var(--accent)",
+              marginBottom: "0.75rem",
+              textTransform: "uppercase",
+              fontWeight: 400,
+            }}
+          >
+            04 / Photos
           </p>
-          <h2 style={{ fontSize: "clamp(2rem, 5vw, 4rem)", lineHeight: 1, margin: 0 }}>
+          <h2
+            style={{
+              fontSize: "clamp(2rem, 5vw, 3.5rem)",
+              lineHeight: 1,
+              margin: 0,
+            }}
+          >
             Gallery
           </h2>
-        </div>
+        </motion.div>
 
         {/* Upload zone */}
         <div
@@ -54,20 +80,44 @@ export default function Photos() {
           onDragOver={(e) => e.preventDefault()}
           onClick={() => inputRef.current?.click()}
           style={{
-            border: "1px dashed #333",
-            padding: "3rem",
+            border: "1px dashed rgba(201, 185, 154, 0.2)",
+            padding: "3.5rem",
             textAlign: "center",
-            marginBottom: "2rem",
-            cursor: "crosshair",
-            transition: "border-color 0.15s",
+            marginBottom: "2.5rem",
+            cursor: "pointer",
+            transition: "all 0.3s ease",
+            borderRadius: "4px",
+            background: "rgba(255,255,255,0.01)",
           }}
-          onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.borderColor = "#ff3c00")}
-          onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.borderColor = "#333")}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLElement).style.borderColor = "var(--accent)";
+            (e.currentTarget as HTMLElement).style.background = "rgba(201, 185, 154, 0.03)";
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLElement).style.borderColor = "rgba(201, 185, 154, 0.2)";
+            (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.01)";
+          }}
         >
-          <p style={{ fontSize: "0.75rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#555", margin: 0 }}>
+          <p
+            style={{
+              fontSize: "0.8rem",
+              letterSpacing: "0.15em",
+              textTransform: "uppercase",
+              color: "var(--text-secondary)",
+              margin: 0,
+              fontWeight: 400,
+            }}
+          >
             Drop photos here or click to upload
           </p>
-          <p style={{ fontSize: "0.6rem", color: "#333", marginTop: "0.5rem", letterSpacing: "0.1em" }}>
+          <p
+            style={{
+              fontSize: "0.65rem",
+              color: "rgba(255,255,255,0.2)",
+              marginTop: "0.75rem",
+              letterSpacing: "0.1em",
+            }}
+          >
             JPG, PNG, WEBP, GIF
           </p>
           <input
@@ -85,22 +135,32 @@ export default function Photos() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
-              gap: "1px",
-              background: "#333",
-              border: "1px solid #333",
+              gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+              gap: "0.75rem",
             }}
           >
             {photos.map((photo, i) => (
               <div
                 key={i}
-                style={{ position: "relative", aspectRatio: "1", overflow: "hidden", background: "#0a0a0a", cursor: "crosshair" }}
+                style={{
+                  position: "relative",
+                  aspectRatio: "1",
+                  overflow: "hidden",
+                  background: "var(--bg)",
+                  cursor: "pointer",
+                  borderRadius: "4px",
+                  border: "1px solid var(--border)",
+                }}
                 onMouseEnter={(e) => {
-                  const overlay = e.currentTarget.querySelector(".overlay") as HTMLElement;
+                  const overlay = e.currentTarget.querySelector(
+                    ".overlay"
+                  ) as HTMLElement;
                   if (overlay) overlay.style.opacity = "1";
                 }}
                 onMouseLeave={(e) => {
-                  const overlay = e.currentTarget.querySelector(".overlay") as HTMLElement;
+                  const overlay = e.currentTarget.querySelector(
+                    ".overlay"
+                  ) as HTMLElement;
                   if (overlay) overlay.style.opacity = "0";
                 }}
               >
@@ -108,31 +168,52 @@ export default function Photos() {
                 <img
                   src={photo.src}
                   alt={photo.caption ?? `Photo ${i + 1}`}
-                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: "block",
+                  }}
                 />
                 <div
                   className="overlay"
                   style={{
                     position: "absolute",
                     inset: 0,
-                    background: "rgba(0,0,0,0.7)",
+                    background: "rgba(9,9,9,0.8)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     gap: "1rem",
                     opacity: 0,
-                    transition: "opacity 0.15s",
+                    transition: "opacity 0.3s ease",
                   }}
                 >
                   <button
                     onClick={() => setLightbox(photo)}
-                    style={{ background: "none", border: "1px solid #f0ede6", color: "#f0ede6", padding: "8px", cursor: "crosshair" }}
+                    style={{
+                      background: "none",
+                      border: "1px solid var(--fg)",
+                      color: "var(--fg)",
+                      padding: "10px",
+                      cursor: "pointer",
+                      borderRadius: "2px",
+                      transition: "all 0.3s ease",
+                    }}
                   >
                     <ZoomIn size={16} />
                   </button>
                   <button
                     onClick={() => removePhoto(i)}
-                    style={{ background: "none", border: "1px solid #ff3c00", color: "#ff3c00", padding: "8px", cursor: "crosshair" }}
+                    style={{
+                      background: "none",
+                      border: "1px solid rgba(255,100,100,0.5)",
+                      color: "rgba(255,100,100,0.8)",
+                      padding: "10px",
+                      cursor: "pointer",
+                      borderRadius: "2px",
+                      transition: "all 0.3s ease",
+                    }}
                   >
                     <X size={16} />
                   </button>
@@ -143,7 +224,15 @@ export default function Photos() {
         )}
 
         {photos.length === 0 && (
-          <p style={{ fontSize: "0.7rem", color: "#333", letterSpacing: "0.15em", textTransform: "uppercase", textAlign: "center" }}>
+          <p
+            style={{
+              fontSize: "0.75rem",
+              color: "rgba(255,255,255,0.15)",
+              letterSpacing: "0.15em",
+              textTransform: "uppercase",
+              textAlign: "center",
+            }}
+          >
             No photos yet
           </p>
         )}
@@ -162,31 +251,39 @@ export default function Photos() {
             alignItems: "center",
             justifyContent: "center",
             padding: "2rem",
-            cursor: "crosshair",
+            cursor: "pointer",
           }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={lightbox.src}
             alt={lightbox.caption ?? "Photo"}
-            style={{ maxWidth: "90vw", maxHeight: "90vh", objectFit: "contain", border: "1px solid #333" }}
+            style={{
+              maxWidth: "90vw",
+              maxHeight: "90vh",
+              objectFit: "contain",
+              borderRadius: "4px",
+            }}
           />
           <button
             onClick={() => setLightbox(null)}
             style={{
               position: "absolute",
-              top: "1.5rem",
-              right: "1.5rem",
+              top: "2rem",
+              right: "2rem",
               background: "none",
-              border: "1px solid #333",
-              color: "#f0ede6",
-              padding: "8px 12px",
-              cursor: "crosshair",
+              border: "1px solid rgba(255,255,255,0.15)",
+              color: "var(--fg)",
+              padding: "10px 16px",
+              cursor: "pointer",
               fontSize: "0.7rem",
               letterSpacing: "0.1em",
+              borderRadius: "2px",
+              fontFamily: "var(--font-body)",
+              transition: "border-color 0.3s ease",
             }}
           >
-            CLOSE
+            Close
           </button>
         </div>
       )}
