@@ -60,7 +60,7 @@ export default function Work() {
           className="work-grid"
           style={{
             display: "grid",
-            gridTemplateColumns: "260px 1fr",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 260px), 1fr))",
             gap: "0",
             border: "1px solid var(--border)",
             borderRadius: "4px",

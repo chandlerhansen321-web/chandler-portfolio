@@ -90,7 +90,7 @@ export default function Contact() {
           className="contact-grid"
           style={{
             display: "grid",
-            gridTemplateColumns: "1fr 1fr",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 22rem), 1fr))",
             gap: "5rem",
             alignItems: "start",
           }}
