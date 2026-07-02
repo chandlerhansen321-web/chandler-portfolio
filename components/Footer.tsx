@@ -32,7 +32,7 @@ export default function Footer() {
           fontWeight: 300,
         }}
       >
-        chandlerhansen.com
+        chandler-portfolio.vercel.app
       </p>
     </footer>
   );

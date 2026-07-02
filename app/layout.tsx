@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Chandler Hansen",
     description: "Developer, builder, creator.",
-    url: "https://chandlerhansen.com",
+    url: "https://chandler-portfolio.vercel.app",
   },
 };
 

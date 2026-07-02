@@ -69,7 +69,7 @@ export default function Hero() {
             fontWeight: 400,
           }}
         >
-          Portfolio — 2025
+          Portfolio — {new Date().getFullYear()}
         </motion.p>
 
         <motion.h1
