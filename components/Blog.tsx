@@ -153,7 +153,7 @@ export default function Blog() {
                     whiteSpace: "nowrap",
                   }}
                 >
-                  {new Date(p.date).toLocaleDateString("en-US", {
+                  {new Date(`${p.date}T00:00:00`).toLocaleDateString("en-US", {
                     month: "short",
                     day: "numeric",
                     year: "numeric",
@@ -204,7 +204,7 @@ export default function Blog() {
                   marginBottom: "1rem",
                 }}
               >
-                {new Date(post.date).toLocaleDateString("en-US", {
+                {new Date(`${post.date}T00:00:00`).toLocaleDateString("en-US", {
                   month: "long",
                   day: "numeric",
                   year: "numeric",
