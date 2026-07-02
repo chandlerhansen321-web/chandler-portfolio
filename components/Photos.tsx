@@ -79,6 +79,15 @@ export default function Photos() {
           onDrop={handleDrop}
           onDragOver={(e) => e.preventDefault()}
           onClick={() => inputRef.current?.click()}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              inputRef.current?.click();
+            }
+          }}
+          role="button"
+          tabIndex={0}
+          aria-label="Upload photos"
           style={{
             border: "1px dashed rgba(201, 185, 154, 0.2)",
             padding: "3.5rem",
@@ -191,6 +200,7 @@ export default function Photos() {
                 >
                   <button
                     onClick={() => setLightbox(photo)}
+                    aria-label="View photo"
                     style={{
                       background: "none",
                       border: "1px solid var(--fg)",
@@ -205,6 +215,7 @@ export default function Photos() {
                   </button>
                   <button
                     onClick={() => removePhoto(i)}
+                    aria-label="Remove photo"
                     style={{
                       background: "none",
                       border: "1px solid rgba(255,100,100,0.5)",

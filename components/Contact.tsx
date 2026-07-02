@@ -179,6 +179,7 @@ export default function Contact() {
               value={form.name}
               onChange={handleChange}
               placeholder="Name"
+              aria-label="Name"
               required
               style={inputStyle}
               onFocus={(e) =>
@@ -195,6 +196,7 @@ export default function Contact() {
               value={form.email}
               onChange={handleChange}
               placeholder="Email"
+              aria-label="Email"
               required
               style={inputStyle}
               onFocus={(e) =>
@@ -210,6 +212,7 @@ export default function Contact() {
               value={form.message}
               onChange={handleChange}
               placeholder="Message"
+              aria-label="Message"
               required
               rows={6}
               style={{ ...inputStyle, resize: "vertical" }}

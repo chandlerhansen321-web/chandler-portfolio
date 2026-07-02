@@ -77,6 +77,7 @@ export default function Nav() {
       {/* Mobile hamburger */}
       <button
         onClick={() => setMenuOpen(!menuOpen)}
+        aria-expanded={menuOpen}
         style={{
           background: "none",
           border: "1px solid var(--border)",
