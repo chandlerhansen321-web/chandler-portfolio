@@ -67,7 +67,30 @@ export default function Work() {
             overflow: "hidden",
           }}
         >
+          {workHistory.length === 0 && (
+            <div
+              style={{
+                padding: "4rem",
+                textAlign: "center",
+                background: "rgba(255,255,255,0.01)",
+              }}
+            >
+              <p
+                style={{
+                  fontSize: "0.75rem",
+                  color: "rgba(255,255,255,0.2)",
+                  letterSpacing: "0.15em",
+                  textTransform: "uppercase",
+                  margin: 0,
+                }}
+              >
+                No work history yet — add it in data/work.ts
+              </p>
+            </div>
+          )}
+
           {/* Sidebar */}
+          {workHistory.length > 0 && (
           <div style={{ borderRight: "1px solid var(--border)" }}>
             {workHistory.map((job) => (
               <button
@@ -116,6 +139,7 @@ export default function Work() {
               </button>
             ))}
           </div>
+          )}
 
           {/* Detail panel */}
           {selected && (

@@ -54,6 +54,30 @@ export default function Projects() {
           gap: "1.5rem",
         }}
       >
+        {projects.length === 0 && (
+          <div
+            style={{
+              gridColumn: "1 / -1",
+              padding: "4rem",
+              textAlign: "center",
+              background: "rgba(255,255,255,0.01)",
+              border: "1px solid var(--border)",
+              borderRadius: "4px",
+            }}
+          >
+            <p
+              style={{
+                fontSize: "0.75rem",
+                color: "rgba(255,255,255,0.2)",
+                letterSpacing: "0.15em",
+                textTransform: "uppercase",
+                margin: 0,
+              }}
+            >
+              No projects yet — add them in data/projects.ts
+            </p>
+          </div>
+        )}
         {projects.map((project, i) => (
           <motion.div
             key={project.id}
